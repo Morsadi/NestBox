@@ -1,0 +1,77 @@
+{# templates/browse/_pagination.html #}
+
+{% if view_mode == 'files' %}
+    {% set count = total_file_count %}
+    {% set label = 'file' %}
+{% else %}
+    {% set count = total_media_asset_count %}
+    {% set label = 'media item' %}
+{% endif %}
+
+<div class="pagination-container">
+    <div class="pagination-info">
+        {% if count == 0 %}
+            Showing <strong>0</strong> of <strong>0</strong> {{ label }}s
+        {% else %}
+            {% set start_index = ((page - 1) * per_page) + 1 %}
+            {% set end_index = [start_index + per_page - 1, count] | min %}
+            
+            Showing <strong>{{ start_index }}</strong>–<strong>{{ end_index }}</strong>
+            of <strong>{{ count }}</strong> {{ label }}{{ 's' if count != 1 else '' }}
+        {% endif %}
+    </div>
+
+    {% if total_pages > 1 %}
+    <nav class="pager" aria-label="Pagination">
+        <ul>
+            {# PREV #}
+            <li>
+                {% if page > 1 %}
+                    <a class="pager-btn" href="{{ url_for('browse.browse_directory', view_mode=view_mode, path=path, page=page-1) }}">‹ Prev</a>
+                {% else %}
+                    <span class="pager-btn disabled">‹ Prev</span>
+                {% endif %}
+            </li>
+
+            {# PAGE 1 #}
+            <li>
+                <a class="pager-page {% if page == 1 %}active{% endif %}" href="{{ url_for('browse.browse_directory', view_mode=view_mode, path=path, page=1) }}">1</a>
+            </li>
+
+            {# SLIDING WINDOW LOGIC #}
+            {% set start_page = [2, page - 2] | max %}
+            {% set end_page   = [total_pages - 1, page + 2] | min %}
+
+            {% if start_page > 2 %}
+                <li><span class="pager-ellipsis">…</span></li>
+            {% endif %}
+
+            {% for p in range(start_page, end_page + 1) %}
+                <li>
+                    <a class="pager-page {% if p == page %}active{% endif %}" href="{{ url_for('browse.browse_directory', view_mode=view_mode, path=path, page=p) }}">{{ p }}</a>
+                </li>
+            {% endfor %}
+
+            {% if end_page < total_pages - 1 %}
+                <li><span class="pager-ellipsis">…</span></li>
+            {% endif %}
+
+            {# LAST PAGE #}
+            {% if total_pages > 1 %}
+                <li>
+                    <a class="pager-page {% if page == total_pages %}active{% endif %}" href="{{ url_for('browse.browse_directory', view_mode=view_mode, path=path, page=total_pages) }}">{{ total_pages }}</a>
+                </li>
+            {% endif %}
+
+            {# NEXT #}
+            <li>
+                {% if page < total_pages %}
+                    <a class="pager-btn" href="{{ url_for('browse.browse_directory', view_mode=view_mode, path=path, page=page+1) }}">Next ›</a>
+                {% else %}
+                    <span class="pager-btn disabled">Next ›</span>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+    {% endif %}
+</div>

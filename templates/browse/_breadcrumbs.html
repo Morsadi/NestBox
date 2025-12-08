@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/breadcrumbs.css') }}">
+<nav aria-label="breadcrumb" class="breadcrumb-cont">
+  <ol class="breadcrumb-list">
+
+    <li class="breadcrumb-item breadcrumb-icon">
+      <i class="fa fa-hard-drive" aria-hidden="true"></i>
+    </li>
+
+    <!--  1. SETUP LOGIC: Determine OS and Parts  -->
+    {% set is_win = ':' in path %}
+    {% set sep = '\\' if is_win else '/' %}
+    
+    {% set tracker = namespace(current='') %}
+
+    {% if is_win %}
+      {% set parts = path.replace('/', '\\').split('\\') | reject('equalto', '') | list %}
+    {% else %}
+      {% set raw = path.split('/') | reject('equalto', '') | list %}
+      {% if raw and raw[0] == 'Volumes' %}
+        {% set tracker.current = '/Volumes' %}
+        {% set parts = raw[1:] %}
+      {% else %}
+        {% set parts = raw %}
+      {% endif %}
+    {% endif %}
+
+	<!-- --- 2. CREATE BREADCRUMBS -->
+    {% for part in parts %}
+      {% if is_win %}
+         {% set tracker.current = tracker.current ~ part ~ sep %}
+      {% else %}
+         {% set tracker.current = tracker.current ~ sep ~ part %}
+      {% endif %}
+
+      {% if loop.last %}
+        <li class="breadcrumb-item active" aria-current="page">{{ part }}</li>
+      {% else %}
+        <li class="breadcrumb-item {{ 'root' if loop.first }}">
+          <a href="{{ url_for('browse.browse_directory', 
+                              view_mode=view_mode, 
+                              path=tracker.current | urlencode) }}">
+            {{ part }}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ol>
+</nav>

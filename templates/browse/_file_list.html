@@ -1,0 +1,46 @@
+
+<div class="order-by">
+    <p>Ordered by: Name</p>
+</div>
+<div class="files-view">
+    {% if folders or files %}
+    <div class="file-grid">
+        {% for folder in folders %}
+            {% if parent != folder.path %}
+            <a href="{{ url_for('browse.browse_directory', view_mode=view_mode, path=folder.path | urlencode) }}" 
+               class="file-card folder-card">
+                <div class="file-card-icon">
+                    <i class="fa fa-folder" aria-hidden="true"></i>
+                </div>
+                <h4 class="file-card-name">
+                    {{ folder.name }}
+                </h4>
+            </a>
+            {% endif %}
+        {% endfor %}
+
+        {% for file in files %}
+            <div 
+                class="file-card file-item {% if file.vid_stream_url %}clickable-video{% endif %}{% if file.full_image_url %} clickable-image{% endif %}" 
+                data-full="{{ file.full_image_url or file.vid_stream_url }}" 
+                title="{{ file.name }} &#013;Size: {{ file.size | simplify_size }} &#013;Modified: {{ file.modified.strftime('%b %d, %Y') }}">
+                <div class="file-card-icon">
+                    <i class="{{ file.icon_class }}" aria-hidden="true"></i>
+                </div>
+                <h4 class="file-card-name">
+                    {{ file.name }}
+                </h4>
+                <span class="file-card-meta">
+                    {% if file.size %}
+                        {{ file.size | simplify_size }}
+                    {% endif %}
+                </span>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-message">
+        <p>No files found in this folder.</p>
+    </div>
+    {% endif %}
+</div>

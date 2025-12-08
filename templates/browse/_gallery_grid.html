@@ -1,0 +1,69 @@
+{% if assets %}
+<div class="order-by">
+    <p>Ordered by: Last modified</p>
+</div>
+<div class="gallery-view">
+    
+    {% for file in assets %}
+    <div class="grid-card">
+        <div class="img-container">
+
+        {% if file.vid_stream_url %}
+            <video
+                src="{{ file.vid_stream_url }}"
+                alt="{{ file.name }}"
+                class="asset-media video-needs-loading clickable-video"
+                loading="lazy"
+                controls="none"
+                playsinline
+                preload="metadata"
+                onerror="this.onerror=null; this.src='/static/default_thumb.png';">
+            </video>
+
+        {% else %}
+            <picture>
+                {% set width = (226 * 1.5) | int %}
+                {% set height = (226 * 1.5) | int %}
+                <source
+                    srcset="{{ file.full_image_url }}?w={{ width }}&h={{ height }}&fmt=avif"
+                    type="image/avif" 
+                    media="screen and (min-width: 640px)"
+                    width="{{ width }}"
+                    height="{{ height }}"
+                    />
+                <source
+                    srcset="{{ file.full_image_url }}?w={{ width }}&h={{ height }}&fmt=webp"
+                    type="image/webp" 
+                    media="screen and (min-width: 640px)"
+                    width="{{ width }}"
+                    height="{{ height }}"
+                    />
+                <source
+                    srcset="{{ file.full_image_url }}?w={{ width }}&h={{ height }}&fmt=jpeg"
+                    type="image/jpeg" 
+                    media="screen and (min-width: 640px)"
+                    width="{{ width }}"
+                    height="{{ height }}"
+                    />
+                <img
+                    src="{{ file.full_image_url }}?w={{ width }}&h={{ height }}&fmt=avif"
+                    data-full="{{ file.full_image_url }}?w=1600&h=1600&fmt=avif"
+                    alt="{{ file.name }}"
+                    class="asset-media clickable-image"
+                    width="{{ width }}"
+                    height="{{ height }}"
+                    loading="lazy"
+                    onerror="this.onerror=null; this.src='/static/default_thumb.png';"
+                />
+            </picture>
+        {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<div class="asset-empty-message">
+    <p>No media found in this folder.</p>
+</div>
+{% endif %}

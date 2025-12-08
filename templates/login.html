@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	Log In
+{% endblock %}
+
+{% block main %}
+<div class="login form-container">
+ <div class="intro-section text-center">
+			<h1 class="fw-bold">Welcome Back</h1>
+	</div>
+
+	<form method="POST" action="{{ url_for('auth.login') }}" class="slide-card form">
+		<div class="mb-4">
+			<label for="username" class="form-label">Username</label>
+			<input
+				type="text"
+				id="username"
+				name="username"
+				class="form-control"
+				placeholder="Enter your username"
+				required
+			>
+		</div>
+
+		<div class="mb-4">
+			<label for="password" class="form-label">Password</label>
+			<input
+				type="password"
+				id="password"
+				name="password"
+				class="form-control"
+				placeholder="Enter your password"
+				required
+			>
+		</div>
+
+		<button type="submit" class="primary-btn">Log In</button>
+	</form>
+
+	<div class="text-center mt-3">
+		<small class="text-muted">
+			Don’t have an account?
+			<a href="{{ url_for('auth.register') }}">Sign up</a>
+		</small>
+	</div>
+</div>
+{% endblock %}

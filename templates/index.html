@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	Welcome
+{% endblock %}
+
+{% block main %}
+<div class="container py-5 text-center">
+	<div class="mx-auto" style="max-width: 600px;">
+		<h1 class="fw-bold mb-3">Welcome to nestbox</h1>
+		<p class="lead text-muted mb-4">
+			A simple, secure platform for managing your local projects.
+		</p>
+		{% if not session.get("user_id") %}
+			<a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg me-2">Log In</a>
+			<a href="{{ url_for('auth.register') }}" class="btn btn-outline-primary btn-lg">Sign Up</a>
+		{% else %}
+			<a href="{{ url_for('index') }}" class="btn btn-success btn-lg">Go to Dashboard</a>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}

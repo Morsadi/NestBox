@@ -1,0 +1,78 @@
+# =========================
+# Python & Flask
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.db-journal
+*.sqlite3
+instance/
+*.log
+
+# Local database (keep only schema if needed)
+*.db
+
+# Flask sessions
+flask_session/
+session_data/
+*.session
+
+# Local uploads & thumbnails
+uploads/
+chunks/
+media_cache/
+tmp/
+*.part
+/static/thumbs/
+
+# SSL / certs
+*.pem
+*.crt
+*.key
+
+# =========================
+# Virtual environments
+# =========================
+venv/
+env/
+.venv/
+pip-wheel-metadata/
+*.egg-info/
+
+# =========================
+# System & editor
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# =========================
+# Node / Frontend
+# =========================
+node_modules/
+npm-debug.log*
+package-lock.json
+yarn.lock
+
+# =========================
+# Compiled / generated
+# =========================
+*.min.css.map
+*.min.js.map
+dist/
+build/
+.cache/
+*.zip
+*.tar.gz
+
+# =========================
+# OS Specific
+# =========================
+ehthumbs.db
+$RECYCLE.BIN/
+*.lnk

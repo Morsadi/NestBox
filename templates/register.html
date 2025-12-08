@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	Sign Up
+{% endblock %}
+
+{% block main %}
+<div class="register form-container">
+	<div class="intro-section text-center">
+			<h1 class="fw-bold">Create an Account</h1>
+	</div>
+
+	<form method="POST" action="{{ url_for('auth.register') }}" class="slide-card form">
+		<div class="mb-4">
+			<label for="username" class="form-label">Username</label>
+			<input
+				type="text"
+				id="username"
+				name="username"
+				class="form-control"
+				placeholder="Enter a username"
+				required
+			>
+		</div>
+
+		<div class="mb-4">
+			<label for="password" class="form-label">Password</label>
+			<input
+				type="password"
+				id="password"
+				name="password"
+				class="form-control"
+				placeholder="Enter a password"
+				required
+			>
+		</div>
+
+		<div class="mb-4">
+			<label for="confirmation" class="form-label">Confirm Password</label>
+			<input
+				type="password"
+				id="confirmation"
+				name="confirmation"
+				class="form-control"
+				placeholder="Confirm your password"
+				required
+			>
+		</div>
+		<div class="mb-4">
+			<label for="invitation_code" class="form-label">Host Invitation Code</label>
+			<input
+				type="text"
+				id="invitation_code"
+				name="invitation_code"
+				class="form-control"
+				placeholder="Enter host invitation code"
+				required
+			>
+		</div>
+		<button type="submit" class="primary-btn">Sign Up</button>
+	</form>
+</div>
+{% endblock %}

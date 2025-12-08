@@ -1,0 +1,71 @@
+{% extends "layout.html" %} 
+{% block title %} Dashboard {% endblock %} 
+
+{% block main %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<div class="dashboard">
+
+	{% if is_indexing %}
+	<div class="alert alert-info alert-dismissible fade show mb-4" role="alert">
+		<i class="fas fa-sync fa-spin me-2"></i> 
+		Sync in progress...
+		Please refresh the page in a few moments.
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	{% endif %}
+	<div class="intro-section text-center">
+		<h1 class="fw-bold">Welcome, {{ username }}!</h1>
+		<p class="text-muted">Access your home local storage.</p>
+	</div>
+	
+	<div class="drives-section">
+		<h2 class="text-muted">Connected Drives</h2>
+		<div class="drives">
+			{% for d in drives %}
+			<div id="drive-{{ loop.index }}" class="slide-card">
+				<button
+					class="index-drive-btn rescan-btn"
+					data-bs-toggle="tooltip"
+					data-bs-placement="top"
+					title="Resync in case files were manually misplaced!"
+					data-drive-path="{{ d.path }}"
+					data-drive-id="{{ loop.index }}">
+					<i class="fa fa-sync"></i>
+				</button>
+				 
+				<h5>{{ d.name }}</h5>
+				<p class="mb-1"><strong>Size:</strong> {{ d.size_gb }} GB</p>
+
+				<div
+					class="progress mb-2"
+					style="height: 10px">
+					<div
+						class="progress-bar {% if d.used_percent > 85 %}bg-danger{% elif d.used_percent > 60 %}bg-warning{% else %}bg-success{% endif %}"
+						role="progressbar"
+						style="width: {{ d.used_percent }}%"
+						aria-valuenow="{{ d.used_percent }}"
+						aria-valuemin="0"
+						aria-valuemax="100"></div>
+				</div>
+				<p class="text-muted small">{{ d.used_percent }}% used</p>
+
+				<div class="card-actions">
+					<a
+						href="{{ url_for('browse.browse_directory', view_mode='files', path=d.path | urlencode) }}"
+						class="primary-btn"
+						>Explore
+					</a>
+				</div>
+				<p
+					class="indexing-status mt-2 small"
+					id="status-{{ loop.index }}"></p>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %} 
+{% endblock %}

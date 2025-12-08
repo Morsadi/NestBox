@@ -1,0 +1,52 @@
+{% extends "layout.html" %} 
+{% block title %}Browse{% endblock %} {% block main %} 
+
+<link
+	rel="stylesheet"
+	href="{{ url_for('static', filename='css/browse.css') }}" />
+
+<div
+	class="browse-directory">
+		{% if is_indexing %}
+		<div class="alert alert-info alert-dismissible fade show mb-4" role="alert">
+			<i class="fas fa-sync fa-spin me-2"></i> 
+			Sync in progress...
+			Please refresh the page in a few moments.
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+		{% endif %}
+	{% include "browse/_breadcrumbs.html" %}
+	<hr class="my-4" />
+	<div class="layout-settings d-flex justify-content-between align-items-center mb-4">
+		<div class="view-toggle-cont">
+			<div class="view-btn-group" role="group" aria-label="View Toggle">
+				<a
+					href="{{ url_for('browse.browse_directory', path=path | urlencode, view_mode='files') }}"
+					class="view-btn {% if view_mode == 'files' %}active{% endif %}">
+					{% if (total_file_count + (folders|length - 1)) < 0 %}
+						<i class="fa fa-file"></i> All (0)
+					{% else %}
+						<i class="fa fa-file"></i> All ({{ total_file_count + (folders|length - 1) }})
+					{% endif %}
+				</a>
+				<span class="view-btn-separator">|</span>
+				<a
+				href="{{ url_for('browse.browse_directory', path=path | urlencode, view_mode='gallery') }}"
+				class="view-btn {% if view_mode == 'gallery' %}active{% endif %}">
+				<i class="fas fa-th-large"></i> Gallery ({{ total_media_asset_count }})
+				</a>
+				<a
+				href="{{ url_for('upload.upload', path=path | urlencode) }}"
+				class="view-btn upload-btn primary-btn">Upload</a>
+			</div>
+		</div>
+	</div>
+	{% if view_mode == 'gallery' %}
+		{% include 'browse/_gallery_grid.html' %}
+	{% else %}
+		{% include 'browse/_file_list.html' %}
+	{% endif %}
+	{% include 'browse/_pagination.html' %}
+</div>
+<script src="{{ url_for('static', filename='js/media.js') }}"></script>
+{% endblock %}

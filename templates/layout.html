@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1" />
+
+			<link
+				rel="stylesheet"
+				href="{{ url_for('static', filename='css/lib/bootstrap.min.css') }}" />
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='css/styles.css') }}" />
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='css/lib/fontawesome.min.css') }}" />
+
+		<title>{% block title %}NestBox{% endblock %}</title>
+	</head>
+
+	<div id="media-preview" class="media-preview hidden">
+		<div class="media-preview-content">
+			<span class="media-preview-close"><i class="fas fa-times"></i></span>
+			<img id="media-preview-img" class="preview-img" />
+			<video id="media-preview-video" class="preview-video" controls playsinline></video>
+		</div>
+	</div>
+
+	<body>
+		<header class="p-3 shadow-sm d-flex align-items-center mb-5">
+			<a
+				class="navbar-brand logo"
+				href="/"
+				>NESTBOX</a
+			>
+			<div class="header-actions ms-auto d-flex align-items-center">
+				{% if session.username %}
+				<a
+					class="primary-btn"
+					href="/logout"
+					>Logout</a
+				>
+				{% else %}
+				<a
+					class="primary-btn"
+					href="/login"
+					>Login</a
+				>
+				<a
+					class="primary-btn"
+					href="/register"
+					>Register</a
+				>
+				{% endif %}
+			</div>
+		</header>
+
+		<div
+			class="content-wrapper"
+			id="mainContent">
+			{% block main %}
+			<div class="container-fluid">
+				<h1 class="mb-4">Dashboard</h1>
+				<p>Click the arrow button on the top left to toggle the sidebar navigation.</p>
+				<div class="card shadow-sm">
+					<h3>Mountains</h3>
+					<div class="row row-cols-2 row-cols-md-3 g-4">
+						<div class="col">
+							<div class="card shadow-sm">
+								<div class="card-body">
+									<p class="card-text">Mountains.jpg</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{% endblock %}
+		</div>
+
+		<footer class="text-center py-2 shadow-top">
+			<p class="mb-0" style="margin-bottom: 0;">© {{ current_year or 2025 }} NestBox</p>
+		</footer>
+
+		<script src="{{ url_for('static', filename='js/lib/bootstrap.bundle.min.js') }}"></script>
+	</body>
+</html>

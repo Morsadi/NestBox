@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}Upload to {{ path }}{% endblock %}
+
+{% block main %}
+<div class="upload-screen">
+	<div id="network-alert" class="alert warning hidden">
+		<span>⚠️ Connection interrupted. Reconnecting…</span>
+	</div>
+
+	<a href="{{ url_for('browse.browse_directory', view_mode="gallery", path=path | urlencode) }}"
+	   class="primary-btn back-to-files">
+		<i class="fa fa-arrow-left"></i> Back to Files
+	</a>
+
+	<p class="path-info">
+		Uploading to <span data-destination-path>{{ path }}</span>
+		<input type="hidden" name="destination" value="{{ path }}" />
+	</p>
+
+	<form id="myDropzone" class="dz-area">
+		<div class="dz-message">
+			<span class="cloud"><i class="fa fa-hard-drive"></i></span>
+			<p>Drop files to upload</p>
+			<p>or click to select (max 10GB)</p>
+		</div>
+		<div id="dropzone-previews" class="dz-previews hidden"></div>
+	</form>
+
+	<div class="queue-panel hidden">
+		<p class="title">
+			Upload Queue
+			<span class="stats">(<span id="queue-count">0</span>/<span id="queue-total">0</span>)</span>
+		</p>
+
+		<ul id="file-queue" class="queue-list">
+		</ul>
+	</div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/lib/dropzone.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+{% endblock %}
+

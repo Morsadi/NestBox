@@ -69,3 +69,15 @@ Or:
 ## 7. Run the App, Redis, and Celery
 
 `python run_all.py`
+
+## 8. How to Open NestBox in Your Browser
+
+Once the server starts and shows `Running on https://0.0.0.0:5000`, you can open NestBox from any device on your network.
+
+Use either:
+
+• `https://YOUR_IP:5000`  
+or  
+• `https://YOUR_HOSTNAME.local:5000`
+
+Both options point to the same running instance of NestBox on your machine.

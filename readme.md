@@ -1,11 +1,11 @@
 # NestBox
 #### Local-First Personal Cloud & File Management
-**Video Demo:** <YOUR VIDEO URL HERE>
+**Video Demo:** <https://www.youtube.com/watch?v=Cz2ETY16rG8>
 
 ## 1. Overview
 NestBox is a local-first file management system designed to regain control over your data. In an era where subscription costs for cloud storage are rising and privacy concerns are prevalent, NestBox offers a self-hosted alternative. It turns connected USB drives into a private, secure "personal cloud" accessible via any device on your LAN (phones, VR headsets, laptops).
 
-Unlike traditional cloud services, NestBox runs entirely offline. This ensures complete privacy and facilitates high-speed transfers without relying on external internet providers. The application provides a polished, login-protected dashboard that feels as snappy as modern SaaS products, allowing users to upload, organize, and browse large collections of photos, videos, and files seamlessly from anywhere in the home.
+NestBox runs entirely offline, giving you full control over your data and avoiding reliance on external internet services. The application includes a simple, login-protected dashboard that allows you to upload and browse photos, videos, and files from any device on your home network.
 
 ## 2. Architecture & Tech Stack
 I built the application logic on a robust separation of concerns between the synchronous web server and asynchronous background workers.
@@ -50,7 +50,9 @@ NestBox/
 │   └── file_index.db      # Indexed file metadata
 │
 └── static/ & templates/   # Frontend Assets
+    ├── js/dashboard.js    # Handles drive scanning, dashboard UI updates
     ├── js/upload.js       # Client-side chunking & progress UI
+    ├── js/media.js        # Controls the Files and Gallery views. Handles thumbnail loading, video poster loading.
     └── templates/*.html   # Jinja2 views (Dashboard, Login, Browser)
 ```
 
@@ -64,7 +66,6 @@ Drive indexing and chunk merging are heavy operations. Running them directly in 
 
 ### Local-First Architecture
 NestBox runs entirely inside your local network. This provides:
-
 - Complete privacy  
 - No dependence on cloud services  
 - Much faster transfers than the internet  
@@ -77,3 +78,7 @@ The project originally used an external tool for thumbnails, but Pillow offered 
 
 ### Cryptography for HTTPS
 Mobile browsers restrict advanced file APIs on non-HTTPS connections. A self-signed SSL certificate is required for secure uploads across devices. The `cryptography` library generates these certificates automatically, providing a consistent setup on Windows, macOS, and Linux.
+
+## 5. Setup Guide
+For installation and step-by-step setup, see the full setup guide:
+[setup_guide.md](./setup_guide.md)

@@ -76,3 +76,6 @@ build/
 ehthumbs.db
 $RECYCLE.BIN/
 *.lnk
+
+dump.rdb
+routes/__init__.py

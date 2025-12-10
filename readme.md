@@ -1,6 +1,5 @@
 # NestBox
 #### Local-First Personal Cloud & File Management
-**Video Demo:** <https://www.youtube.com/watch?v=Cz2ETY16rG8>
 
 ## 1. Overview
 NestBox is a local-first file management system designed to regain control over your data. In an era where subscription costs for cloud storage are rising and privacy concerns are prevalent, NestBox offers a self-hosted alternative. It turns connected USB drives into a private, secure "personal cloud" accessible via any device on your LAN (phones, VR headsets, laptops).

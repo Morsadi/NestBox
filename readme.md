@@ -2,12 +2,18 @@
 #### Local-First Personal Cloud & File Management
 
 ## 1. Overview
-NestBox is a local-first file management system designed to regain control over your data. In an era where subscription costs for cloud storage are rising and privacy concerns are prevalent, NestBox offers a self-hosted alternative. It turns connected USB drives into a private, secure "personal cloud" accessible via any device on your LAN (phones, VR headsets, laptops).
+NestBox is a local-first file management app that runs on your own machine and stays entirely on your home network. It allows you to upload files directly from other devices on the same LAN and store them on USB drives connected to the host machine.
 
-NestBox runs entirely offline, giving you full control over your data and avoiding reliance on external internet services. The application includes a simple, login-protected dashboard that allows you to upload and browse photos, videos, and files from any device on your home network.
+The app works offline and doesn’t rely on external services. It provides a simple, login-protected dashboard for uploading, browsing, and managing photos, videos, and files stored on local drives.
+
+<img width="1912" height="876" alt="Screenshot 2026-01-19 064247" src="https://github.com/user-attachments/assets/495c3381-e822-4cd6-8166-eb8cdab32388" /><img width="1910" height="876" alt="Screenshot 2026-01-19 064705" src="https://github.com/user-attachments/assets/59d1c50c-f744-4076-bd95-3aee7e6eb6a1" />
+<img width="1892" height="873" alt="Screenshot 2026-01-19 064423" src="https://github.com/user-attachments/assets/0bd0ed84-678b-43d8-bbd1-45adc551ee43" /><img width="1894" height="873" alt="Screenshot 2026-01-19 064553" src="https://github.com/user-attachments/assets/26d0687e-8ed6-4f1a-aa13-29db0ecef6ed" />
+
+
+
 
 ## 2. Architecture & Tech Stack
-I built the application logic on a robust separation of concerns between the synchronous web server and asynchronous background workers.
+Uploads are designed to return quickly, with the frontend doing minimal work while background workers handle file processing and storage.
 
 **The Core Flow:**
 1.  **Frontend:** Dropzone.js handles chunked file uploads, ensuring reliability.
